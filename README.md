@@ -177,5 +177,5 @@ You'll also, of course, get some practice from this lab! Remember, run the tests
 
 ## Resources
 
-- [Wikipedia](https://en.wikipedia.org/wiki/First-class_function): [First-class unction](https://en.wikipedia.org/wiki/First-class_function)
+- [Wikipedia](https://en.wikipedia.org/wiki/First-class_function): [First-class function](https://en.wikipedia.org/wiki/First-class_function)
 - [JavaScript is Sexy](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/#more-1037): [Higher-order functions](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/#more-1037)
