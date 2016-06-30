@@ -92,7 +92,7 @@ function exerciseRoutine(postRunActivity) {
 }
 ```
 
-Notice that, in `exerciseRoutine()`, the `postRunActivity` parameter is actually a _function_ — we call it it after
+Notice that, in `exerciseRoutine()`, the `postRunActivity` parameter is actually a _function_ — we call it after
 we call `runFiveMiles()`. Now let's try to use this new function we created in our `Monday()` function:
 
 ```js
