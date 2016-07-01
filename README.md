@@ -24,28 +24,28 @@ In programming-speak, we could write out a function for every day (follow along!
 
 ```js
 function Monday() {
-  console.log('Go for a five-mile run')
-  console.log('Pump iron')
+  console.log('Go for a five-mile run');
+  console.log('Pump iron');
 }
 
 function Tuesday() {
-  console.log('Go for a five-mile run')
-  console.log('Swim 40 laps')
+  console.log('Go for a five-mile run');
+  console.log('Swim 40 laps');
 }
 
 function Wednesday() {
-  console.log('Go for a five-mile run')
-  console.log('Go for a five-mile run')
+  console.log('Go for a five-mile run');
+  console.log('Go for a five-mile run');
 }
 
 function Thursday() {
-  console.log('Go for a five-mile run')
-  console.log('Pump iron')
+  console.log('Go for a five-mile run');
+  console.log('Pump iron');
 }
 
 function Friday() {
-  console.log('Go for a five-mile run')
-  console.log('Swim 40 laps')
+  console.log('Go for a five-mile run');
+  console.log('Swim 40 laps');
 }
 ```
 
@@ -55,7 +55,7 @@ What if we pull all of our five-mile runs into their own function?
 
 ```js
 function runFiveMiles() {
-  console.log('Go for a five-mile run')
+  console.log('Go for a five-mile run');
 }
 ```
 
@@ -63,11 +63,11 @@ Okay, that cuts down _slightly_ on how much code we need to write. Let's do the 
 
 ```js
 function liftWeights() {
-  console.log('Pump iron')
+  console.log('Pump iron');
 }
 
 function swimFortyLaps() {
-  console.log('Swim 40 laps')
+  console.log('Swim 40 laps');
 }
 ```
 
@@ -76,8 +76,8 @@ Awesome! We've cut down a little bit more: `Monday()` could now look like
 
 ```js
 function Monday() {
-  runFiveMiles()
-  liftWeights()
+  runFiveMiles();
+  liftWeights();
 }
 ```
 
@@ -87,8 +87,8 @@ second activity can be variable. What if we created a function that took the sec
 
 ```js
 function exerciseRoutine(postRunActivity) {
-  runFiveMiles()
-  postRunActivity()
+  runFiveMiles();
+  postRunActivity();
 }
 ```
 
@@ -97,7 +97,7 @@ we call `runFiveMiles()`. Now let's try to use this new function we created in o
 
 ```js
 function Monday() {
-  exerciseRoutine(liftWeights)
+  exerciseRoutine(liftWeights);
 }
 ```
 
@@ -124,8 +124,8 @@ To start with, let's use the full function syntax we've come to know and love:
 
 ```js
 exerciseRoutine(function() {
-  console.log('Stretch! Work that core!')
-})
+  console.log('Stretch! Work that core!');
+});
 
 // "Go for a five-mile run"
 // "Stretch! Work that core!"
@@ -135,11 +135,11 @@ We can rewrite this to be more concise by using an arrow function:
 
 ```js
 exerciseRoutine(() => {
-  console.log('Stretch! Work that core!')
-})
+  console.log('Stretch! Work that core!');
+});
 
 // Or even shorter:
-exerciseRoutine(() => console.log('Stretch! Work that core!'))
+exerciseRoutine(() => console.log('Stretch! Work that core!'));
 ```
 
 Notice how neither of these functions have a name — we can't refer to it elsewhere, we just pass it in as an argument
@@ -158,23 +158,23 @@ Let's translate this to a function:
 
 ```js
 function morningRoutine(exercise) {
-  var breakfast = null
+  var breakfast = null;
 
   if (exercise === liftWeights) {
-    breakfast = 'protein bar'
+    breakfast = 'protein bar';
   } else if (exercise === swimFortyLaps) {
-    breakfast = 'kale smoothie'
+    breakfast = 'kale smoothie';
   } else {
-    breakfast = 'granola'
+    breakfast = 'granola';
   }
 
-  exerciseRoutine(exercise)
+  exerciseRoutine(exercise);
 
   // we could give this function a name if we wanted to,
   // but since it's only available _inside_ morningRoutine(),
   // we don't need to
   return function() {
-    console.log(`Nom nom nom, this ${breakfast} is delicious!`)
+    console.log(`Nom nom nom, this ${breakfast} is delicious!`);
   }
 }
 ```
@@ -182,13 +182,13 @@ function morningRoutine(exercise) {
 Now when we call `morningRoutine()`, we'll get a function back:
 
 ```js
-var afterExercise = morningRoutine(liftWeights)
+var afterExercise = morningRoutine(liftWeights);
 ```
 
 And we can call that function later:
 
 ```js
-afterExercise()
+afterExercise();
 ```
 
 ![first-class functions in action](https://curriculum-content.s3.amazonaws.com/skills-based-js/first-class_functions_example.png)
