@@ -7,11 +7,6 @@ First-Class Functions
 2. Practice writing functions to use as callbacks
 3. Explain what a "first-class function" is
 
-## TODO (delete this section when finished)
-
-- [ ] Add steps for completing code-along
-- [ ] Add solution branch
-
 ## Introduction
 
 Sometimes in life, we need to take a first step. Since life isn't scripted like a reality TV show, anything can happen
