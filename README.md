@@ -191,11 +191,6 @@ afterExercise();
 If you haven't been following along, it's vitally important that you go back and do so. First-class functions are one
 of JavaScript's most powerful features, but it takes some practice for them to sink in.
 
-## Your turn
-
-You'll also, of course, get some practice from this lab! Remember, run the tests, read the errors, write some code in
-`index.js`, run the tests, read the output — repeat until finished.
-
 ## Resources
 
 - [Wikipedia](https://en.wikipedia.org/wiki/First-class_function): [First-class function](https://en.wikipedia.org/wiki/First-class_function)
