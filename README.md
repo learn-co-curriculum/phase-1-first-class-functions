@@ -102,8 +102,7 @@ call the function when it is needed.
 
 If we call `Monday()`, we'll see that we run five miles, and then we lift weights — awesome!
 
-Functions in JavaScript are **first-class functions**. Among other things, this means that we can pass them as values to
-other functions, just like we did above. They're super useful, as you can see — they even help us exercise in the mornings!
+Functions in JavaScript are **first-class functions**. Among other things, this means that we can pass them as values to other functions, just like we did above. They're super useful, as you can see — they even help us exercise in the mornings!
 
 Note: you'll often see functions used in this way referred to as "callbacks." That's because they're _called back_ after
 the body of the function they're passed to completes! Callbacks are mostly used for asynchronous operations, like
@@ -195,3 +194,5 @@ of JavaScript's most powerful features, but it takes some practice for them to s
 
 - [Wikipedia](https://en.wikipedia.org/wiki/First-class_function): [First-class function](https://en.wikipedia.org/wiki/First-class_function)
 - [JavaScript is Sexy](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/#more-1037): [Higher-order functions](http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/#more-1037)
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/javascript-first-class-functions'>First Class Functions</a> on Learn.co and start learning to code for free.</p>
