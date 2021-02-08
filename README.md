@@ -115,8 +115,8 @@ above. They're super useful, as you can see — they even help us exercise in th
 mornings!
 
 Note: you'll often see functions used in this way referred to as "callbacks."
-That's because they're _called back_ after the body of the function they're
-passed to completes! Callbacks are mostly used for asynchronous operations, like
+That's because they're _called back_ within the body of the function they're
+passed to. Callbacks are mostly used for asynchronous operations, like
 requesting a JSON file from a server, or in the case of Node.js, accessing the
 file system, a database, etc.
 
