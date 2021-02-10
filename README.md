@@ -2,9 +2,9 @@
 
 ## Learning Goals
 
-1. Practice writing inline functions
-2. Practice writing functions to use as callbacks
-3. Explain what a "first-class function" is
+1. Define "first-class function"
+2. Use inline functions
+3. Use functions as return values
 
 ## Introduction
 
@@ -101,32 +101,31 @@ function Monday() {
 }
 ```
 
-Notice that we aren't _calling_ `liftWeights`. When we want to pass a function
-as a value, we pass it by _reference_. We do this by omitting the parentheses.
-We're not running the function at this point. It's up to `exerciseRoutine()` to
-call the function when it is needed.
+Note that we aren't _calling_ `liftWeights`. When we want to pass a function
+as a value, we pass it by _reference_ by omitting the parentheses. We're not
+running the function at this point. It's up to `exerciseRoutine()` to call the
+function when it is needed.
 
 If we call `Monday()`, we'll see that we run five miles, and then we lift
 weights — awesome!
 
-Functions in JavaScript are **first-class functions**. Among other things, this
-means that we can pass them as values to other functions, just like we did
-above. They're super useful, as you can see — they even help us exercise in the
+## Define First-Class Functions
+
+Functions in JavaScript are **first-class objects**, which means they can be
+treated like any other object: they can be assigned to a variable, passed as
+values to other functions, returned as the value from another function, etc.
+They're super useful, as you can see — they even help us exercise in the
 mornings!
 
-Note: you'll often see functions used in this way referred to as "callbacks."
-That's because they're _called back_ within the body of the function they're
-passed to. Callbacks are mostly used for asynchronous operations, like
-requesting a JSON file from a server, or in the case of Node.js, accessing the
-file system, a database, etc.
+> Note that we stated above that JavaScript functions can be treated like any
+> _other_ object. In JavaScript, functions are a special type of object!
 
-## Inline functions
+## Inline Functions
 
 What if, though, we want to have a one-off day of Pilates in our exercise
 routine? Keep in mind that our `exerciseRoutine()` function requires a function
 as its first (and only) parameter. However, that function doesn't have to be
-defined beforehand! We can pass what's called an _anonymous function_ to
-`exerciseRoutine()`.
+defined beforehand! We can pass an _anonymous function_ to `exerciseRoutine()`.
 
 To start with, let's use the full function syntax we've come to know and love:
 
@@ -150,16 +149,14 @@ exerciseRoutine(() => {
 exerciseRoutine(() => console.log('Stretch! Work that core!'));
 ```
 
-Notice how neither of these functions have a name — we can't refer to it
-elsewhere, we just pass it in as an argument to `exerciseRoutine()`. Functions
-that don't have names are, for obvious reasons, known as **anonymous
-functions**.
+Because we only need to use our function this one time, there's no need to give
+it a name or assign it to a variable. Instead, we define it inline as an
+anonymous function, passing it as the argument when we call `exerciseRoutine()`.
 
-## Returning functions
+## Returning Functions
 
 Functions can also return other functions. This is useful when we want to
-package up a function and its environment, but when we don't want to call it
-_just yet_.
+package up a function and its environment, but don't want to call it _just yet_.
 
 For example, let's say our morning routine involves drinking a cup of coffee,
 exercising immediately, and then at some point later (depending on how we feel),
@@ -170,7 +167,7 @@ Let's translate this to a function:
 
 ```js
 function morningRoutine(exercise) {
-  var breakfast = null;
+  let breakfast;
 
   if (exercise === liftWeights) {
     breakfast = 'protein bar';
@@ -182,28 +179,32 @@ function morningRoutine(exercise) {
 
   exerciseRoutine(exercise);
 
-  // we could give this function a name if we wanted to,
-  // but since it's only available _inside_ morningRoutine(),
-  // we don't need to
+  // we could give this function a name if we wanted to, but since
+  // it's only available _inside_ morningRoutine(), we don't need to
   return function() {
     console.log(`Nom nom nom, this ${breakfast} is delicious!`);
   }
 }
 ```
 
-Now when we call `morningRoutine()`, we'll get a function back:
+Now when we call `morningRoutine()`, our exercise routine will be logged as
+before, but we'll also get a function back:
 
 ```js
-var afterExercise = morningRoutine(liftWeights);
+const afterExercise = morningRoutine(liftWeights);
+// LOG: Go for a five-mile run
+// LOG: Pump iron
+
+afterExercise;
+//=> ƒ () { console.log(`Nom nom nom, this ${breakfast} is delicious!`); }
 ```
 
 And we can call that function later:
 
 ```js
 afterExercise();
+// LOG: Nom nom nom, this protein bar is delicious!
 ```
-
-![first-class functions in action](https://curriculum-content.s3.amazonaws.com/skills-based-js/first-class_functions_example.png)
 
 If you haven't been following along, it's vitally important that you go back and
 do so. First-class functions are one of JavaScript's most powerful features, but
