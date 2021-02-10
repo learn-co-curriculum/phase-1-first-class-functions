@@ -2,9 +2,9 @@
 
 ## Learning Goals
 
-1. Define "first-class function"
-2. Use inline functions
-3. Use functions as return values
+- Define "first-class function"
+- Use inline functions
+- Use functions as return values
 
 ## Introduction
 
