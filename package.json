@@ -1,11 +1,7 @@
 {
-  "name": "first-class-functions",
+  "name": "phase-1-first-class-functions",
   "version": "0.1.0",
   "description": "Practice writing and using first-class functions in JavaScript on Learn",
-  "engines": {
-    "node": "6.x",
-    "npm": "3.x"
-  },
   "main": "index.js",
   "scripts": {
     "test": "mocha -R mocha-multi --reporter-options nyan=-,json=.results.json"
@@ -26,10 +22,13 @@
   },
   "homepage": "https://github.com/learn-co-curriculum/first-class-functions#readme",
   "devDependencies": {
-    "expect": "^1.20.1",
-    "jsdom": "^9.2.1",
-    "mocha": "^2.5.3",
+    "babel-core": "6.26.3",
+    "babel-preset-env": "1.7.0",
+    "chai": "4.1.2",
+    "chai-spies": "^1.0.0",
+    "jsdom": "9.2.1",
+    "mocha": "5.2.0",
     "mocha-jsdom": "~1.1.0",
-    "mocha-multi": "^0.9.0"
+    "mocha-multi": "1.0.1"
   }
 }
