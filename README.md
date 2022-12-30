@@ -225,6 +225,10 @@ and [here][Dmitri Pavlutin HoF].
 
 ## Instructions
 
+If you haven't already, **fork and clone** this lab into your local environment.
+Navigate into its directory in the terminal, then run `code .` to open the files
+in Visual Studio Code.
+
 To get more practice with first-class functions, this lesson has three tests to
 pass that require you to write the following functions in the `index.js` file:
 
@@ -243,6 +247,9 @@ pass that require you to write the following functions in the `index.js` file:
 - The `returnsAnAnonymousFunction` function should:
   - take no arguments
   - return an _anonymous function_
+
+When you're done, remember to commit and push your changes up to GitHub, then
+submit your work to Canvas using CodeGrade.
 
 ## Resources
 
