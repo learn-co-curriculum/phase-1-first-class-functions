@@ -2,10 +2,10 @@
 
 ## Learning Goals
 
-- Define "first-class function"
-- Use inline functions
-- Use functions as return values
-- Define "higher-order function"
+- Define "first-class function".
+- Assign a function to variable.
+- Pass a function as an argument to another function.
+- Write a function that returns a function.
 
 ## Introduction
 
@@ -198,6 +198,78 @@ For now, it is enough to understand that **JavaScript functions are all
 first-class, and therefore can be passed as arguments to other functions**.
 
 ## Returning Functions
+
+One more thing functions can do by being first-class is return a function. To
+wrap our minds around that statement, let's review what a `return` is.
+
+A `return` statement ends a function and defines a value to be _returned_ to
+where the function was called. That returned value can be saved to a variable
+or treated as any other variable could. For example:
+
+```js
+function discountByThirtyPercent(price) {
+  return price - price * 0.3;
+}
+
+const discountedPrice = discountByThirtyPercent(100); // return value => 70
+console.log("New price is: ", discountedPrice); // => New price is: 70
+```
+
+Here, we're returning the result of `price - price * 0.3`. We save that result
+to a variable called `discountedPrice`, and can use it as we can any other
+variable.
+
+We can do the same with functions. Functions can `return` a function. That
+`return`ed function can be saved to a variable, and we can use it as we can any
+other variable that stores a function.
+
+For example, let's say we want to write a function that handles book returns and
+refunds. However, we don't want to process the refund until the book is
+completely checked. We can have the function start the process and do all the
+checking it needs, then when it's done, return a function that will process the
+actual refund.
+
+Let's write that out:
+
+```js
+function returnBook(book) {
+  console.log("Starting return of: ", book);
+  console.log("Checking receipt...");
+  console.log("Checking condition...");
+
+  // we could give this anonymous function a name if we wanted to
+  // since it's only available inside returnBook(), we don't need to
+  return function () {
+    console.log("Refund processed!");
+  };
+}
+```
+
+With this, when we call `returnBook()`, the checking process will be logged, and
+we'll also get a function back. We can save that function to a variable to be
+called later:
+
+```js
+const refundCatcher = returnBook("Catcher in the Rye");
+// => Starting return of: Catcher in the Rye
+// => Checking receipt...
+// => Checking condition...
+```
+
+The refund hasn't been processed yet, but we saved that `return`ed refund
+function to a variable called `refundCatcher`. So, we can now process the refund
+by invoking `refundCatcher`.
+
+```js
+refundCatcher();
+// => Refund processed!
+```
+
+**Functions being able to return a function** is useful when we want to package
+up a function and its environment, but don't want to call it _just yet_.
+
+> **Note**: Did you notice the use of an anonymous function in our above
+> example? This is when they start coming in handy!
 
 ## Conclusion
 
