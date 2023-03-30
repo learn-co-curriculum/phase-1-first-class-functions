@@ -273,4 +273,10 @@ up a function and its environment, but don't want to call it _just yet_.
 
 ## Conclusion
 
-Anything variables can do, functions can too.
+Anything variables can do, functions can too. Functions being first-class are
+one of JavaScript's most powerful features, but it takes some practice in each
+of these different scenarios for them to sink in.
+
+It is also important to note that _all functions in JavaScript are first-class_.
+There is no special syntax to "make" or "write" a first-class function. It is
+not a special _type_ of function within JavaScript. They just _are_ first-class.
