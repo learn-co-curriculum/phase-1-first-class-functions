@@ -2,261 +2,281 @@
 
 ## Learning Goals
 
-- Define "first-class function"
-- Use inline functions
-- Use functions as return values
-- Define "higher-order function"
+- Define "first-class function".
+- Assign a function to variable.
+- Pass a function as an argument to another function.
+- Write a function that returns a function.
 
 ## Introduction
 
-Sometimes in life, we need to take a first step. Since life isn't scripted like
-a reality TV show, anything can happen after that initial step. We need to be
-able to adjust accordingly.
+Functions are a powerful, fundamental programming tool. We've learned how to
+write them, and the many different ways there are to write them, and yet we've
+still only scratched the surface. In this lesson, we'll dive deeper into the
+kind of functions JavaScript supports, allowing us to further understand the
+many ways in which we can use them.
 
-Imagine an exercise routine: every morning, we run 5 miles. But afterwards —
-depending on the day — we might lift weights, go for a swim, or run an extra 5
-miles.
+## JavaScript Functions are First-Class
 
-In programming-speak, we could write out a function for every day (follow along
-by writing out these examples in a REPL, or in the `index.js` file!):
+In JavaScript, **functions are considered first-class**. Being first-class means
+they are treated like any other variable. The primary benefits of this are as
+follows:
+
+- Functions can be assigned as a value to any variable.
+- Functions can be passed as an argument to another function.
+- Functions can be returned by another function.
+
+That first point is nothing we haven't seen before, but the last two sound a bit
+wild, don't they? Let's see some examples to help wrap our heads around it all!
+
+## Assigning Functions to a Variable
+
+Again, this isn't anything new. We've _been_ doing this, whether through
+function declaration, function expression, or arrow functions. Let's review all
+three of those again:
+
+Function declaration:
 
 ```js
-function Monday() {
-  console.log("Go for a five-mile run");
-  console.log("Pump iron");
+function iDoDeclare() {
+  console.log("Well then!");
 }
 
-function Tuesday() {
-  console.log("Go for a five-mile run");
-  console.log("Swim 40 laps");
-}
+iDoDeclare(); // => Well then!
+```
 
-function Wednesday() {
-  console.log("Go for a five-mile run");
-  console.log("Go for a five-mile run");
-}
+We created a function that logs `Well then!`, and assigned it to a
+variable called `iDoDeclare`.
 
-function Thursday() {
-  console.log("Go for a five-mile run");
-  console.log("Pump iron");
-}
+Function expression:
 
-function Friday() {
-  console.log("Go for a five-mile run");
-  console.log("Swim 40 laps");
+```js
+const expressYourself = function () {
+  console.log("You've got to!");
+};
+
+expressYourself(); // => You've got to!
+```
+
+Again, we've created a function that logs something and saved it to a variable,
+in this case `expressYourself`.
+
+Lastly, an arrow function:
+
+```js
+const likeAnArrow = () => {
+  console.log("Time flies!");
+};
+
+likeAnArrow(); // => Time flies!
+```
+
+Your turn, what have we done here?
+
+If you said we created a function that logs `Time flies!` and assigned it to the
+`likeAnArrow` variable, you are correct.
+
+**Being able to assign functions to variables is important**. It's what makes us
+able to invoke them, and invoke them again, and again, and again. It also makes
+them easier to pass around, even as an argument to another function.
+
+## Passing Functions as Arguments
+
+Before we dive right into it, let's review what an argument is. When we define a
+function, we can tell it to expect something will be passed to it when invoked.
+To do so, we set up _parameters_.
+
+```js
+function findBook(genre) {
+  return "Found you a book in the genre: ", genre;
 }
 ```
 
-But that's pretty tedious. And we already know that functions are supposed to
-help us _reduce_ this kind of repetition.
-
-What if we pull all of our five-mile runs into their own function?
+In the above example, we set up a parameter called `genre`. When we invoke this
+`findBook` function, we can pass it an _argument_ for that parameter. That
+argument becomes the value of that parameter within the function body.
 
 ```js
-function runFiveMiles() {
-  console.log("Go for a five-mile run");
+findBook("fantasy");
+// => Found you a book in the genre: fantasy
+```
+
+We can also pass in a variable as an argument instead of directly passing the
+value. It would work the same:
+
+```js
+const wantedGenre = "fantasy";
+findBook(wantedGenre);
+// => Found you a book in the genre: fantasy
+```
+
+When writing a function with a parameter, we usually have a good idea of what
+type of argument will be passed in for it. For example, we knew `genre` would
+have to be some sort of string. If we were to write some sort of calculation
+function...
+
+```js
+function discountByThirtyPercent(price) {
+  return price - price * 0.3;
+}
+
+discountByThirtyPercent(100); // => 70
+```
+
+...we could reasonably expect that any argument passed to `price` will be a
+number. This sort of expectation is needed because it informs how we use the
+parameter variable within our function body. Our calculation in the above
+wouldn't make sense if we thought `price` could ever be a string instead.
+
+This kind of expectation is especially needed when we start passing in
+_functions_ as arguments. Let's look at an example. First, let's write two
+different functions that console log different greetings.
+
+```js
+function welcome() {
+  console.log("Welcome to Bookish Mart!");
+}
+
+function bye() {
+  console.log("Thanks for shopping at Bookish Mart!");
 }
 ```
 
-Okay, that cuts down _slightly_ on how much code we need to write. Let's do the
-same thing for lifting weights and swimming:
+Next, let's create a `cashier` function. Depending on whether the cashier is
+welcoming or saying goodbye to a customer, they should be able to say a
+different greeting. Let's create a parameter called `sayGreeting` to allow that
+variability.
 
 ```js
-function liftWeights() {
-  console.log("Pump iron");
-}
-
-function swimFortyLaps() {
-  console.log("Swim 40 laps");
-}
+function cashier(sayGreeting) {}
 ```
 
-Awesome! We've cut down a little bit more: `Monday()` could now look like:
+Theoretically, we _could_ expect different greeting strings to be passed in as
+arguments. However, we already made two different greeting functions - we might as
+well use them.
+
+So, instead, we can expect that one of the two greeting functions will be passed
+in as the argument for `sayGreeting`. Assuming that `sayGreeting` will be a
+function allows us to _invoke_ the parameter inside the `cashier` function's
+body.
 
 ```js
-function Monday() {
-  runFiveMiles();
-  liftWeights();
-}
-```
-
-While it is a tiny bit shorter than before, there is definitely still room for
-improvement. We know that every day, our routine includes two activities. We
-also know that the first activity is always a run. That means that the second
-activity can be variable. What if we created a function that took the second
-activity as a parameter?
-
-```js
-function exerciseRoutine(postRunActivity) {
-  runFiveMiles();
-  postRunActivity();
+function cashier(sayGreeting) {
+  sayGreeting();
 }
 ```
 
-Notice that, in `exerciseRoutine()`, the `postRunActivity` parameter is a
-_callback function_ — we call it after we call `runFiveMiles()`. Now let's try
-to use this new function we created in our `Monday()` function:
+Whichever greeting function gets passed in as the argument for that parameter,
+will then be the function that gets invoked inside `cashier`'s function body.
+
+Let's invoke our `cashier` to say our `bye` greeting. Just as we're able to pass
+in a variable that holds a string or number value, we can pass in variables that
+hold a _function_ too. In our case, we want to pass in our `bye` function.
 
 ```js
-function Monday() {
-  exerciseRoutine(liftWeights);
-}
-
-function exerciseRoutine(postRunActivity) {
-  runFiveMiles();
-  postRunActivity();
-}
+cashier(bye);
+// => Thanks for shopping at Bookish Mart!
 ```
 
-Note that we aren't _calling_ `liftWeights`. When we want to pass a function as
-a value, we pass it by _reference_ by omitting the parentheses at the end of the
-function. We're not running the function at this point. It's up to
-`exerciseRoutine()` to call the function when it is needed.
+When invoking `cashier` and passing `bye` as the argument for `sayGreeting`,
+`sayGreeting` becomes a reference to the `bye` function. Thus, when
+`sayGreeting` is invoked inside of `cashier`, we're actually invoking `bye`.
 
-If we call `Monday()`, we'll see that we run five miles, and then we lift
-weights — awesome!
-
-## Define First-Class Functions
-
-Functions in JavaScript are **first-class objects**, which means they can be
-treated like any other object: they can be assigned to a variable, passed as
-values to other functions, returned as the value from another function, etc.
-They're super useful, as you can see — they even help us exercise in the
-mornings!
-
-> Note that we stated above that JavaScript functions can be treated like any
-> _other_ object. In JavaScript, functions are a special type of object!
-
-## Inline Functions
-
-What if, though, we want to have a one-off day of Pilates in our exercise
-routine? Keep in mind that our `exerciseRoutine()` function requires a function
-as its first (and only) parameter. However, that function doesn't have to be
-defined beforehand! We can pass an _anonymous function_ to `exerciseRoutine()`.
-
-To start with, let's use the full function syntax we've come to know and love:
+The same would be true if we passed in `welcome` instead.
 
 ```js
-exerciseRoutine(function () {
-  console.log("Stretch! Work that core!");
-});
-
-// "Go for a five-mile run"
-// "Stretch! Work that core!"
+cashier(welcome);
+// => Welcome to Bookish Mart!
 ```
 
-We can rewrite this to be more concise by using an arrow function:
+Whoa. _That's a lot going on._ If you're having trouble grasping what's happening,
+that is OK. This is a difficult topic, and it takes time and practice to sink
+in. It is a vital concept that will open up a lot of doors for what you can do
+with JavaScript. It's so important that we will cover it in more detail in the
+next lesson.
 
-```js
-exerciseRoutine(() => {
-  console.log("Stretch! Work that core!");
-});
-
-// Or even shorter:
-exerciseRoutine(() => console.log("Stretch! Work that core!"));
-```
-
-Because we only need to use our function this one time, there's no need to give
-it a name or assign it to a variable. Instead, we define it inline as an
-anonymous function, passing it as the argument when we call `exerciseRoutine()`.
+For now, it is enough to understand that **JavaScript functions are all
+first-class, and therefore can be passed as arguments to other functions**.
 
 ## Returning Functions
 
-Functions can also return other functions. This is useful when we want to
-package up a function and its environment, but don't want to call it _just yet_.
+One more thing functions can do by being first-class is return a function. To
+wrap our minds around that statement, let's review what a `return` is.
 
-For example, let's say our morning routine involves drinking a cup of coffee,
-exercising immediately, and then at some point later (depending on how we feel),
-eating breakfast. What we'll have for breakfast depends on what kind of exercise
-we're doing.
-
-Let's translate this to a function:
+A `return` statement ends a function and defines a value to be _returned_ to
+where the function was called. That returned value can be saved to a variable
+or treated as any other variable could. For example:
 
 ```js
-function morningRoutine(exercise) {
-  let breakfast;
+function discountByThirtyPercent(price) {
+  return price - price * 0.3;
+}
 
-  if (exercise === liftWeights) {
-    breakfast = "protein bar";
-  } else if (exercise === swimFortyLaps) {
-    breakfast = "kale smoothie";
-  } else {
-    breakfast = "granola";
-  }
+const discountedPrice = discountByThirtyPercent(100); // return value => 70
+console.log("New price is: ", discountedPrice); // => New price is: 70
+```
 
-  exerciseRoutine(exercise);
+Here, we're returning the result of `price - price * 0.3`. We save that result
+to a variable called `discountedPrice`, and can use it as we can any other
+variable.
 
-  // we could give this function a name if we wanted to, but since
-  // it's only available _inside_ morningRoutine(), we don't need to
+We can do the same with functions. Functions can `return` a function. That
+`return`ed function can be saved to a variable, and we can use it as we can any
+other variable that stores a function.
+
+For example, let's say we want to write a function that handles book returns and
+refunds. However, we don't want to process the refund until the book is
+completely checked. We can have the function start the process and do all the
+checking it needs, then when it's done, return a function that will process the
+actual refund.
+
+Let's write that out:
+
+```js
+function returnBook(book) {
+  console.log("Starting return of: ", book);
+  console.log("Checking receipt...");
+  console.log("Checking condition...");
+
+  // we could give this anonymous function a name if we wanted to
+  // since it's only available inside returnBook(), we don't need to
   return function () {
-    console.log(`Nom nom nom, this ${breakfast} is delicious!`);
+    console.log("Refund processed!");
   };
 }
 ```
 
-Now when we call `morningRoutine()`, our exercise routine will be logged as
-before, but we'll also get a function back:
+With this, when we call `returnBook()`, the checking process will be logged, and
+we'll also get a function back. We can save that function to a variable to be
+called later:
 
 ```js
-const afterExercise = morningRoutine(liftWeights);
-// LOG: Go for a five-mile run
-// LOG: Pump iron
-
-afterExercise;
-//=> ƒ () { console.log(`Nom nom nom, this ${breakfast} is delicious!`); }
+const refundCatcher = returnBook("Catcher in the Rye");
+// => Starting return of: Catcher in the Rye
+// => Checking receipt...
+// => Checking condition...
 ```
 
-And we can call that function later:
+The refund hasn't been processed yet, but we saved that `return`ed refund
+function to a variable called `refundCatcher`. So, we can now process the refund
+by invoking `refundCatcher`.
 
 ```js
-afterExercise();
-// LOG: Nom nom nom, this protein bar is delicious!
+refundCatcher();
+// => Refund processed!
 ```
 
-If you haven't been following along, it's vitally important that you go back and
-do so. First-class functions are one of JavaScript's most powerful features, but
-it takes some practice for them to sink in.
+**Functions being able to return a function** is useful when we want to package
+up a function and its environment, but don't want to call it _just yet_.
 
-## Higher-Order Functions
+> **Note**: Did you notice the use of an anonymous function in our above
+> example? This is when they start coming in handy!
 
-A higher-order function is a function that can accept functions as arguments
-and/or return a function. You can read more about them [here][FCC HoF]
-and [here][Dmitri Pavlutin HoF].
+## Conclusion
 
-## Instructions
+Anything variables can do, functions can too. Functions being first-class are
+one of JavaScript's most powerful features, but it takes some practice in each
+of these different scenarios for them to sink in.
 
-If you haven't already, **fork and clone** this lab into your local environment.
-Navigate into its directory in the terminal, then run `code .` to open the files
-in Visual Studio Code.
-
-To get more practice with first-class functions, this lesson has three tests to
-pass that require you to write the following functions in the `index.js` file:
-
-- The `receivesAFunction` function should:
-
-  - take a _callback function_ as an argument
-  - call the callback function
-  - it doesn't matter what this function returns, so long as it calls the
-    callback function
-
-- The `returnsANamedFunction` function should:
-
-  - take no arguments
-  - return a _named function_
-
-- The `returnsAnAnonymousFunction` function should:
-  - take no arguments
-  - return an _anonymous function_
-
-When you're done, remember to commit and push your changes up to GitHub, then
-submit your work to Canvas using CodeGrade.
-
-## Resources
-
-- [Wikipedia: First-class function](https://en.wikipedia.org/wiki/First-class_function)
-- [FreeCodeCamp: A Quick Intro to Higher-Order Functions in JavaScript][FCC HoF]
-- [Dmitri Pavlutin: What are Higher-Order Functions in JavaScript?][Dmitri Pavlutin HoF]
-- [MDN Function Expression (named vs anonymous functions)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function)
-
-[FCC HoF]: https://www.freecodecamp.org/news/a-quick-intro-to-higher-order-functions-in-javascript-1a014f89c6b/
-[Dmitri Pavlutin HoF]: https://dmitripavlutin.com/javascript-higher-order-functions
+It is also important to note that _all functions in JavaScript are first-class_.
+There is no special syntax to "make" or "write" a first-class function. It is
+not a special _type_ of function within JavaScript. They just _are_ first-class.
